@@ -5,7 +5,7 @@ This guide will help you deploy your Christmas Tree app so anyone can access it 
 ## Overview
 
 You need to deploy:
-1. **Backend** → Free hosting service (Render/Railway)
+1. **Backend** → Free hosting service (Railway - recommended for no cold starts!)
 2. **Frontend** → GitHub Pages (free!)
 
 ---
@@ -43,37 +43,43 @@ Replace `YOUR_USERNAME` with your GitHub username.
 
 ---
 
-## Step 2: Deploy Backend to Render (Free & Easy)
+## Step 2: Deploy Backend to Railway (Free & Fast - No Cold Starts!)
 
-### 2.1 Sign Up for Render
+### 2.1 Sign Up for Railway
 
-1. Go to [Render.com](https://render.com)
-2. Click **"Get Started for Free"**
+1. Go to [Railway.app](https://railway.app)
+2. Click **"Start a New Project"** or **"Login"**
 3. Sign up with GitHub (easiest option)
+4. Railway gives you $5/month free credit (usually enough for small apps)
 
-### 2.2 Create Web Service
+### 2.2 Create New Project
 
-1. Click **"New +"** → **"Web Service"**
-2. Connect your GitHub repository
-3. Select your `Christmastreedesign` repository
-4. Configure:
-   - **Name**: `christmas-tree-backend`
-   - **Root Directory**: `server` ⚠️ **IMPORTANT!**
-   - **Environment**: `Node`
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
-   - **Plan**: **Free**
-5. Click **"Create Web Service"**
+1. Click **"New Project"**
+2. Select **"Deploy from GitHub repo"**
+3. Authorize Railway to access your GitHub account
+4. Select your `Christmastreedesign` repository
 
-### 2.3 Wait for Deployment
+### 2.3 Configure the Service
 
-- Render will build and deploy (takes 2-5 minutes)
-- You'll see logs in the Render dashboard
-- Once done, you'll get a URL like: `https://christmas-tree-backend.onrender.com`
+1. Railway will detect it's a Node.js project
+2. Click on the service that was created
+3. Go to **Settings** tab
+4. Set **Root Directory** to: `server` ⚠️ **IMPORTANT!**
+5. Railway will automatically detect:
+   - **Build Command**: `npm install` (automatic)
+   - **Start Command**: `npm start` (automatic)
+6. No need to set environment variables (Railway handles PORT automatically)
 
-### 2.4 Copy Your Backend URL
+### 2.4 Get Your Backend URL
 
-**Important:** Copy the full URL (e.g., `https://christmas-tree-backend.onrender.com`)
+1. Go to the **Settings** tab of your service
+2. Under **Domains**, Railway will generate a URL automatically
+3. Or click **"Generate Domain"** to create a custom one
+4. Copy the full URL (e.g., `https://christmas-tree-backend-production.up.railway.app`)
+
+### 2.5 Copy Your Backend URL
+
+**Important:** Copy the full URL (e.g., `https://christmas-tree-backend-production.up.railway.app`)
 
 You'll need this in the next step!
 
@@ -88,9 +94,9 @@ You'll need this in the next step!
 3. Click **"New repository secret"**
 4. Add:
    - **Name**: `VITE_API_URL`
-   - **Value**: `https://your-backend-url.onrender.com/api`
+   - **Value**: `https://your-backend-url.up.railway.app/api`
    
-   ⚠️ **Replace** `your-backend-url.onrender.com` with your actual Render URL!
+   ⚠️ **Replace** `your-backend-url.up.railway.app` with your actual Railway URL!
    
 5. Click **"Add secret"**
 
@@ -147,15 +153,16 @@ Replace `YOUR_USERNAME` with your GitHub username (e.g., `gyuryeon.github.io/Chr
 ### Backend URL Format
 
 Make sure your `VITE_API_URL` secret is:
-- ✅ `https://your-backend.onrender.com/api` (with `/api` at the end)
-- ❌ NOT `https://your-backend.onrender.com` (missing `/api`)
+- ✅ `https://your-backend.up.railway.app/api` (with `/api` at the end)
+- ❌ NOT `https://your-backend.up.railway.app` (missing `/api`)
 
 ### Free Tier Limitations
 
-**Render Free Tier:**
-- Service may sleep after 15 minutes of inactivity
-- First request after sleep takes ~30 seconds (wake up time)
-- This is normal and free!
+**Railway Free Tier:**
+- $5/month free credit (usually enough for small apps)
+- **No cold starts** - service stays awake! ⚡
+- Fast deployments
+- Auto-scales based on usage
 
 **GitHub Pages:**
 - Completely free
@@ -168,9 +175,10 @@ Make sure your `VITE_API_URL` secret is:
 
 ### Backend Not Working?
 
-1. Check Render dashboard for errors
-2. Check backend logs in Render
+1. Check Railway dashboard for errors
+2. Check backend logs in Railway (click on service → Logs tab)
 3. Verify the URL in GitHub secret is correct
+4. Make sure Root Directory is set to `server` in Railway settings
 
 ### Frontend Can't Connect?
 
@@ -204,8 +212,9 @@ GitHub Actions will automatically rebuild and redeploy! 🚀
 ## Quick Checklist
 
 - [ ] Code pushed to GitHub
-- [ ] Backend deployed to Render
-- [ ] Backend URL copied
+- [ ] Backend deployed to Railway
+- [ ] Root Directory set to `server` in Railway
+- [ ] Backend URL copied from Railway
 - [ ] `VITE_API_URL` secret added to GitHub
 - [ ] GitHub Pages enabled
 - [ ] Code pushed to trigger deployment
@@ -216,6 +225,6 @@ GitHub Actions will automatically rebuild and redeploy! 🚀
 ## Need Help?
 
 - Check [DEPLOYMENT.md](./DEPLOYMENT.md) for more details
-- Check Render logs if backend isn't working
+- Check Railway logs if backend isn't working
 - Check GitHub Actions logs if frontend isn't deploying
 
